@@ -210,6 +210,13 @@ public class MyLinkedList<E> implements List211<E> {
 
 		return temp.data;
 	}
+	
+	/**
+	 * @return data at tial
+	 */
+	public E tailData(){
+	  return tail.data;
+	}
 
 	/**
 	 * checks to see if there is a cycle within the DLinkedList
@@ -309,9 +316,11 @@ public class MyLinkedList<E> implements List211<E> {
 		checkIndex(index);
 
 		if (index == 0) {
+		  tempData = head.data;
 			head = head.next;
 			head.prev = null;
 		} else if (index == size - 1) {
+		  tempData = tail.data;
 			tail = tail.prev;
 			tail.next = null;
 		}
@@ -333,6 +342,16 @@ public class MyLinkedList<E> implements List211<E> {
 		return tempData;
 	}
 
+	/**
+	 * removes last item in list
+	 * @return last item in list
+	 */
+	public E removeTail(){
+	  tempData = tail.data;
+    tail = tail.prev;
+    tail.next = null;
+    return tempData;
+	}
 	/**
 	 * uses a selectionSort on the DLinkedList
 	 */

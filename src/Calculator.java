@@ -1,6 +1,7 @@
 
 public class Calculator {
-
+  private String exp;
+  
   Calculator(){
     
   }

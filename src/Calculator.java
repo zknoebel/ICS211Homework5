@@ -1,12 +1,21 @@
 
 public class Calculator {
-  private String exp;
+  private String express;
+  private String operators = "+-*/";
+  private MyStack operandStack;
   
-  Calculator(){
-    
+  Calculator(){  
   }
   
   public double calculate(String expression){
+    
+  }
+  
+  private boolean isOperator(char ch){
+    
+  }
+  
+  private double operate(){
     
   }
 }

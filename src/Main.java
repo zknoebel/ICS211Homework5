@@ -30,6 +30,10 @@ public class Main {
     while(fs.hasNextLine()){
       System.out.println(calc.calculate(fs.nextLine()));
     }
+
+    System.out.println("");
+    System.out.println("");
+    calc.userInterface();
     
     fs.close();
 	}

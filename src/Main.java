@@ -11,7 +11,9 @@ public class Main {
 		Calculator calc = new Calculator();
     Scanner fs = new Scanner(new FileReader("src//TestInput"));
 		
-		
+		MyStack asdf = new MyStack();
+		asdf.push(1);
+		asdf.pop();
 		
 		System.out.println(calc.calculate("1 1 +"));
     System.out.println(calc.calculate("1 1 -"));

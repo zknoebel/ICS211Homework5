@@ -374,8 +374,11 @@ public class MyLinkedList<E> implements List211<E> {
     tempData = tail.data;
     if (tail != head) {
       tail = tail.prev;
+      tail.next = null;
+    }else{
+      tail = null;
     }
-    tail.next = null;
+    size --;
     return tempData;
   }
 

@@ -3,115 +3,140 @@ import java.util.EmptyStackException;
 import java.util.Scanner;
 
 public class Calculator {
-	private String express;
-	private static final String OPERATORS = "+-*/";
-	private static final String INTORDOT = "0123456789.";
-	private MyStack operandStack;
-	private double first;
-	private double second;
-	private double result;
-	private char[] test;
-	private InputStreamReader userInput = new InputStreamReader(System.in);
-	private Scanner inputScanner = new Scanner(userInput);
+  private String express;
+  private static final String OPERATORS = "+-*/";
+  private static final String INTORDOT = "0123456789.";
+  private MyStack operandStack;
+  private double first;
+  private double second;
+  private double result;
+  private double temp;
+  private char[] test;
+  private InputStreamReader userInput = new InputStreamReader(System.in);
+  private Scanner inputScanner = new Scanner(userInput);
+  private boolean operated = false;
 
-	Calculator() {
-	}
 
-	public double calculate(String expression) {
-		operandStack = new MyStack<>();
+  Calculator() {
+  }
 
-		String[] tokens = expression.split("\\s+");
 
-		for (int i = 0; i < tokens.length; i++) {
+  public double calculate(String expression) {
+    operandStack = new MyStack<>();
 
-			if (isNumber(tokens[i])) {
-				operandStack.push(tokens[i]);
-			} else if (isOperator(tokens[i].charAt(0)) && tokens[i].length() == 1) {
-				operate(tokens[i].charAt(0));
-				operandStack.push(String.valueOf(result));
-			} else {
-				throw new IllegalArgumentException("Will not handle charactor:" + tokens[i]);
-			}
-		}
-		try {
-			return Double.parseDouble((String) operandStack.pop());
-		} catch (NumberFormatException ex) {
+    String[] tokens = expression.split("\\s+");
 
-			throw new IllegalArgumentException("More input required");
-		}
-	}
+    for (int i = 0; i < tokens.length; i++) {
 
-	private boolean isOperator(char ch) {
-		return OPERATORS.indexOf(ch) != -1;
-	}
+      if (isNumber(tokens[i])) {
+        operandStack.push(tokens[i]);
+        operated = false;
+      }
+      else if (isOperator(tokens[i].charAt(0)) && tokens[i].length() == 1) {
+        operate(tokens[i].charAt(0));
+        operandStack.push(String.valueOf(result));
+        operated = true;
+      }
+      else {
+        throw new IllegalArgumentException("Will not handle charactor:" + tokens[i]);
+      }
+    }
+    try {
+      if (operated == true) {
+        temp = Double.parseDouble((String) operandStack.pop());
+        if(operandStack.empty()){
+        return temp;
+      }else{
+        throw new IllegalArgumentException("More input required");
+      }
+      }
+      else {
+        throw new IllegalArgumentException("More input required");
+      }
+    }
+    catch (NumberFormatException ex) {
 
-	private boolean isNumber(String s) {
-		test = new char[s.length()];
-		test = s.toCharArray();
+      throw new IllegalArgumentException("More input required");
+    }
+  }
 
-		for (int i = 0; i < s.length(); i++) {
-			if (!isIntOrDot(test[i])) {
-				return false;
-			}
-		}
-		return true;
-	}
 
-	private boolean isIntOrDot(char ch) {
-		return INTORDOT.indexOf(ch) != -1;
-	}
+  private boolean isOperator(char ch) {
+    return OPERATORS.indexOf(ch) != -1;
+  }
 
-	private double operate(char ch) {
-		second = Double.parseDouble((String) operandStack.pop());
-		first = Double.parseDouble((String) operandStack.pop());
 
-		switch (ch) {
-		case '+': {
-			result = first + second;
-			break;
-		}
-		case '-': {
-			result = first - second;
-			break;
-		}
-		case '*': {
-			result = first * second;
-			break;
-		}
-		case '/': {
-			result = first / second;
-			break;
-		}
-		}
+  private boolean isNumber(String s) {
+    test = new char[s.length()];
+    test = s.toCharArray();
 
-		return result;
-	}
+    for (int i = 0; i < s.length(); i++) {
+      if (!isIntOrDot(test[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-	public void userInterface() {
-		System.out.println("Please enter a postfix mathmatical expression");
-		System.out.println("Only characters '0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , . , + , - , * , /' are valid ");
-		System.out.println("Between each of the operands and operators provide a space");
-		System.out.println("     ex. 14 76 + 999 /");
-		System.out.println("when the expression is complete, press enter");
-		System.out.println("To quit, enter command 'exit'");
-		do {
-			try {
-				express = inputScanner.nextLine();
-				if (!express.equals("exit")) {
-					System.out.println("= " + calculate(express));
-				}
-			} catch (IllegalArgumentException | EmptyStackException ex) {
 
-				System.out.println("Please enter a postfix mathmatical expression");
-				System.out.println(
-						"Only characters '0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , . , + , - , * , /' are valid ");
-				System.out.println("Between each of the operands and operators provide a space");
-				System.out.println("     ex. 14 76 + 999 /");
-				System.out.println("when the expression is complete, press enter");
-				System.out.println("To quit, enter command 'exit'");
-			}
-		} while (!express.equals("exit"));
+  private boolean isIntOrDot(char ch) {
+    return INTORDOT.indexOf(ch) != -1;
+  }
 
-		System.out.println("Goodbye");
-	}
+
+  private double operate(char ch) {
+    second = Double.parseDouble((String) operandStack.pop());
+    first = Double.parseDouble((String) operandStack.pop());
+
+    switch (ch) {
+    case '+': {
+      result = first + second;
+      break;
+    }
+    case '-': {
+      result = first - second;
+      break;
+    }
+    case '*': {
+      result = first * second;
+      break;
+    }
+    case '/': {
+      result = first / second;
+      break;
+    }
+    }
+
+    return result;
+  }
+
+
+  public void userInterface() {
+    System.out.println("Please enter a postfix mathmatical expression");
+    System.out.println("Only characters '0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , . , + , - , * , /' are valid ");
+    System.out.println("Between each of the operands and operators provide a space");
+    System.out.println("     ex. 14 76 + 999 /");
+    System.out.println("when the expression is complete, press enter");
+    System.out.println("To quit, enter command 'exit'");
+    do {
+      try {
+        express = inputScanner.nextLine();
+        if (!express.equals("exit")) {
+          System.out.println("= " + calculate(express));
+        }
+      }
+      catch (IllegalArgumentException | EmptyStackException ex) {
+
+        System.out.println("Please enter a postfix mathmatical expression");
+        System.out.println("Only characters '0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , . , + , - , * , /' are valid ");
+        System.out.println("Between each of the operands and operators provide a space");
+        System.out.println("     ex. 14 76 + 999 /");
+        System.out.println("when the expression is complete, press enter");
+        System.out.println("To quit, enter command 'exit'");
+      }
+    }
+    while (!express.equals("exit"));
+
+    System.out.println("Goodbye");
+  }
 }

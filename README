@@ -1,2 +1,43 @@
 Homework 5 for ICS 211 at University of Hawaii at Manoa
 
+This program is designed to calculate a mathematical expression in postfix form.
+
+
+
+
+The form of mathematical expression that most people are familiar with is the 
+infix form. In the infix form the order of operation is determined by rules of
+precedence rather than just token placement. An example of an infix expression
+would be something like this.
+
+ 3 + 54 * (8 - 150) / 4
+ 
+In this expression we know '8 - 150' is calculated first, because it is in 
+parenthesis. '54 * (-142)' is calculated next because it is the first
+multiplication or division symbol. '-7668 / 4 is calculated next because it is
+the next multiplication or division symbol. '3 + -1917' is calculated last 
+because addition subtraction have the lowest order of precedence compared to 
+parenthesis and multiplication and division. The expression = -1914
+ 
+In postfix notation the precedence comes from the order in which the tokens are
+placed. The last two operands given before the operator will be operated on by 
+the operator. After the operation, the answer is added to the stack of operands.
+This means that the above expression could be written in this way if it was in 
+postfix notation:
+ 
+ 8 150 - 54 * 4 / 3 +  
+ 
+ 8 150 -    -->  -148
+ -148 54 *  -->  -7668
+ -7668 4 /  -->  -1917
+ -1917 3 +  -->  -1914
+ 
+In this version of the program entering expressions with negative numbers are
+not yet supported, but can be entered using the form '0 yourNumber -'
+ 
+ -15 32 *
+ 
+would be entered as
+
+ 0 15 - 32 *
+ 

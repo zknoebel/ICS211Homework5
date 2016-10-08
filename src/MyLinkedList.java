@@ -55,7 +55,10 @@ public class MyLinkedList<E> implements List211<E> {
     private DLinkedNode<E> next = null;
     private DLinkedNode<E> prev = null;
 
-
+/**
+ * creates a DLinkedNode and takes input data and transfers it to the local variable data 
+ * @param data
+ */
     DLinkedNode(E data) {
       this.data = data;
     }

@@ -38,6 +38,10 @@ public class Calculator {
 		}
 	}
 	
+	/**
+	*calculates a mathmatical expression doing "float math"(really
+	*math with doubles) and returns a double as an answer.
+	*/
 	public double calculateDouble(String expression) {
 		operandStack = new MyStack<>();
 
@@ -72,7 +76,13 @@ public class Calculator {
 			throw new IllegalArgumentException("More input required");
 		}
 	}
-	
+
+	/**
+	*calculates a mathmatical expression using "int math"
+	*this means that all answers are integer answers. If it would normally be an answer with a decimal
+	*such as 3/2 = 1.5, the answer would be truncated to the int without the decimal point
+	*this means that 3/2 = 1   and that 1/2 = 0
+	*/	
 	public int calculateInt(String expression) {
 		operandStack = new MyStack<>();
 
@@ -148,7 +158,11 @@ public class Calculator {
 	private boolean isIntOrDot(char ch) {
 		return INTORDOT.indexOf(ch) != -1;
 	}
-	
+
+	/**
+	*checks to see if a string has a period in it
+	*this is used to determin it a number is a floating point number or an integer
+	*/	
 	private boolean checkForDot(String str){
 		for(int i = 0; i < str.length(); i ++){
 			if(str.charAt(i) == '.'){
@@ -192,6 +206,9 @@ public class Calculator {
 		return result;
 	}
 	
+	/**
+	*This preforms operations on integers, doing integer math
+	*/
 	private int operateOnInts(char ch) { 
 		secondInt = Integer.parseInt((String) operandStack.pop());
 		firstInt = Integer.parseInt((String) operandStack.pop());

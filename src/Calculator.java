@@ -42,7 +42,7 @@ public class Calculator {
 	*calculates a mathmatical expression doing "float math"(really
 	*math with doubles) and returns a double as an answer.
 	*/
-	public double calculateDouble(String expression) {
+	private double calculateDouble(String expression) {
 		operandStack = new MyStack<>();
 
 		String[] tokens = expression.split("\\s+");
@@ -83,7 +83,7 @@ public class Calculator {
 	*such as 3/2 = 1.5, the answer would be truncated to the int without the decimal point
 	*this means that 3/2 = 1   and that 1/2 = 0
 	*/	
-	public int calculateInt(String expression) {
+	private int calculateInt(String expression) {
 		operandStack = new MyStack<>();
 
 		String[] tokens = expression.split("\\s+");

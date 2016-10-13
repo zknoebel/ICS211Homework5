@@ -110,7 +110,7 @@ public class Calculator {
 	 * @return first operated by second example: first = 1 second = 2 ch = /
 	 *         returns 0.5
 	 */
-	private double operate(char ch) {
+	private double operate(char ch) { 
 		second = Double.parseDouble((String) operandStack.pop());
 		first = Double.parseDouble((String) operandStack.pop());
 

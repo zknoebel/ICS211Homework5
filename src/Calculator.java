@@ -7,14 +7,17 @@ public class Calculator {
 	private static final String OPERATORS = "+-*/";
 	private static final String INTORDOT = "0123456789.";
 	private MyStack<String> operandStack;
-	private double first;
-	private double second;
+	private double first, second;
+	private int firstInt, secondInt;
 	private double result;
+	private int resultInt;
 	private double temp;
+	private int tempInt;
 	private char[] test;
 	private InputStreamReader userInput = new InputStreamReader(System.in);
 	private Scanner inputScanner = new Scanner(userInput);
 	private boolean operated = false;
+	private boolean hasDot;
 
 	Calculator() {
 	}
@@ -26,7 +29,16 @@ public class Calculator {
 	 *            is the expression to be calculated
 	 * @return the answer
 	 */
-	public double calculate(String expression) {
+	public Number calculate(String expression) {
+		hasDot = checkForDot(expression);
+		if(hasDot){
+			return calculateDouble(expression);
+		}else{
+			return calculateInt(expression);
+		}
+	}
+	
+	public double calculateDouble(String expression) {
 		operandStack = new MyStack<>();
 
 		String[] tokens = expression.split("\\s+");
@@ -49,6 +61,41 @@ public class Calculator {
 				temp = Double.parseDouble((String) operandStack.pop());
 				if (operandStack.empty()) {
 					return temp;
+				} else {
+					throw new IllegalArgumentException("More input required");
+				}
+			} else {
+				throw new IllegalArgumentException("More input required");
+			}
+		} catch (NumberFormatException ex) {
+
+			throw new IllegalArgumentException("More input required");
+		}
+	}
+	
+	public int calculateInt(String expression) {
+		operandStack = new MyStack<>();
+
+		String[] tokens = expression.split("\\s+");
+
+		for (int i = 0; i < tokens.length; i++) {
+
+			if (isNumber(tokens[i])) {
+				operandStack.push(tokens[i]);
+				operated = false;
+			} else if (isOperator(tokens[i].charAt(0)) && tokens[i].length() == 1) {
+				operateOnInts(tokens[i].charAt(0));
+				operandStack.push(String.valueOf(resultInt));
+				operated = true;
+			} else {
+				throw new IllegalArgumentException("Will not handle charactor:" + tokens[i]);
+			}
+		}
+		try {
+			if (operated == true) {
+				tempInt = Integer.parseInt((String) operandStack.pop());
+				if (operandStack.empty()) {
+					return tempInt;
 				} else {
 					throw new IllegalArgumentException("More input required");
 				}
@@ -101,6 +148,15 @@ public class Calculator {
 	private boolean isIntOrDot(char ch) {
 		return INTORDOT.indexOf(ch) != -1;
 	}
+	
+	private boolean checkForDot(String str){
+		for(int i = 0; i < str.length(); i ++){
+			if(str.charAt(i) == '.'){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * first and second are the operands
@@ -134,6 +190,32 @@ public class Calculator {
 		}
 
 		return result;
+	}
+	
+	private int operateOnInts(char ch) { 
+		secondInt = Integer.parseInt((String) operandStack.pop());
+		firstInt = Integer.parseInt((String) operandStack.pop());
+
+		switch (ch) {
+		case '+': {
+			resultInt = firstInt + secondInt;
+			break;
+		}
+		case '-': {
+			resultInt = firstInt - secondInt;
+			break;
+		}
+		case '*': {
+			resultInt = firstInt * secondInt;
+			break;
+		}
+		case '/': {
+			resultInt = firstInt / secondInt;
+			break;
+		}
+		}
+
+		return resultInt;
 	}
 
 	/**

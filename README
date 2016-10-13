@@ -2,7 +2,11 @@ Homework 5 for ICS 211 at University of Hawaii at Manoa
 
 This program is designed to calculate a mathematical expression in postfix form.
 
-
+The program was tested using the provided mathmatical expressions along with a
+few other expressions. Then the userInterface was tested more thoroughly by 
+typing in different types of expressions while the program was running. This 
+allowed the calculate function to be tested along side with the userInterface
+function.
 
 
 The form of mathematical expression that most people are familiar with is the 
